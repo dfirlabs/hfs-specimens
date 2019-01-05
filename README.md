@@ -1,2 +1,2 @@
-HFS/HFS+ file system specimens.
+HFS/HFS+/HFSX file system specimens.
 
