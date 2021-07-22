@@ -68,6 +68,11 @@ create_test_file_entries()
 	mkdir ${MOUNT_POINT}/testdir1/xattr2
 	xattr -w myxattr2 "My 2nd extended attribute" ${MOUNT_POINT}/testdir1/xattr2
 
+	# Create a file with an extended attribute that is not stored inline
+	read -d "" -n 8192 -r LARGE_XATTR_DATA < LICENSE;
+	touch ${MOUNT_POINT}/testdir1/large_xattr
+	xattr -w mylargexattr "${LARGE_XATTR_DATA}" ${MOUNT_POINT}/testdir1/large_xattr
+
 	# Create a file that uses HFS+ compression (decmpfs)
 	if test -x ${AFSCTOOL};
 	then
@@ -86,6 +91,14 @@ create_test_file_entries()
 		# Create a file that uses HFS+ compression (decmpfs) compression method 8
 		ditto --nohfsCompression LICENSE ${MOUNT_POINT}/testdir1/compressed4
 		${AFSCTOOL} -c -T LZVN ${MOUNT_POINT}/testdir1/compressed4
+
+		# Create a file that uses HFS+ compression (decmpfs) compression method 11
+		# echo "My compressed file" > ${MOUNT_POINT}/testdir1/compressed5
+		# ${AFSCTOOL} -c -T LZFSE ${MOUNT_POINT}/testdir1/compressed5
+
+		# Create a file that uses HFS+ compression (decmpfs) compression method 12
+		# ditto --nohfsCompression LICENSE ${MOUNT_POINT}/testdir1/compressed6
+		# ${AFSCTOOL} -c -T LZFSE ${MOUNT_POINT}/testdir1/compressed6
 	else
 		ditto --hfsCompression LICENSE ${MOUNT_POINT}/testdir1/compressed1
 	fi
