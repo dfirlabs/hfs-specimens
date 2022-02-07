@@ -149,8 +149,8 @@ create_test_file_entries()
 	setfattr -n "user.myxattr2" -v "My 2nd extended attribute" ${MOUNT_POINT}/testdir1/xattr2
 
 	# Create a file with an extended attribute that is not stored inline
-	# Note that the Linux HFS+ implementation does not suport creating extended attributes
-	# that are not stored inline, this supports upto approximately 3800 bytes of value data.
+	# Note that the Linux HFS+ implementation does not support creating extended attributes
+	# that are not stored inline, this supports up to approximately 3800 bytes of value data.
 
 	# TODO: create file that uses extents (overflow) file.
 }
