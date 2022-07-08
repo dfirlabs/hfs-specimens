@@ -154,6 +154,22 @@ create_test_file_entries()
 	fi
 
 	# TODO: create file that uses extents (overflow) file
+
+	# Create a block device file
+	# Need to run mknod with sudo otherwise it errors with: Operation not permitted
+	sudo mknod ${MOUNT_POINT}/testdir1/blockdev1 b 24 57
+
+	# Create a character device file
+	# Need to run mknod with sudo otherwise it errors with: Operation not permitted
+	sudo mknod ${MOUNT_POINT}/testdir1/chardev1 c 13 68
+
+	# Create a whiteout (node) file
+	# Need to run mknod with sudo otherwise it errors with: Operation not permitted
+	# sudo mknod ${MOUNT_POINT}/testdir1/whiteout1 w
+	# mknod: Invalid argument
+
+	# Create a pipe (FIFO) file
+	mkfifo ${MOUNT_POINT}/testdir1/pipe1
 }
 
 create_test_file_entries_unicode()
@@ -183,6 +199,8 @@ create_test_file_entries_unicode()
 
 assert_availability_binary diskutil;
 assert_availability_binary hdiutil;
+assert_availability_binary mkfifo;
+assert_availability_binary mknod;
 assert_availability_binary sw_vers;
 
 MACOS_VERSION=`sw_vers -productVersion`;
