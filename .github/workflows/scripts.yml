@@ -36,3 +36,16 @@ jobs:
       with:
         name: specimens-linux
         path: specimens/*/*.raw
+  run_scripts_macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Generate test data
+      run: |
+        ./generate-specimens-macos.sh
+        ./generate-specimens-many-attributes-macos.sh
+        ./generate-specimens-many-files-macos.sh
+    - uses: actions/upload-artifact@v7
+      with:
+        name: specimens-macos
+        path: specimens/*/*.dmg
